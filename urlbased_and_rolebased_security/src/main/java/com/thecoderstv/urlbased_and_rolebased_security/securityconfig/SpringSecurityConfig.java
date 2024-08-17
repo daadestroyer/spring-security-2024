@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
 public class SpringSecurityConfig {
@@ -31,7 +32,8 @@ public class SpringSecurityConfig {
                 )
                 .formLogin(formLogin ->
                         formLogin
-                                .defaultSuccessUrl("/admin/dashboard")
+                                // .defaultSuccessUrl("/admin/dashboard") // here we have passed static dashboard api which in the cause of user creates problem and give 403(because user is unauthorized to access admin dashbard)
+                                .successHandler(customAuthenticationSuccessHandler())
                                 .permitAll() // here you are using spring provided default login page and we enabled it like this
                 )
                 .logout(logout ->
@@ -52,5 +54,10 @@ public class SpringSecurityConfig {
         UserDetails admin = User.builder().username("shubham").password(bCryptPasswordEncoder().encode("shubham")).roles("ADMIN").build();
         UserDetails user = User.builder().username("pankaj").password(bCryptPasswordEncoder().encode("pankaj")).roles("USER").build();
         return new InMemoryUserDetailsManager(admin, user);
+    }
+
+    @Bean
+    public AuthenticationSuccessHandler customAuthenticationSuccessHandler() {
+        return new CustomAuthenticationSuccessHandler();
     }
 }
