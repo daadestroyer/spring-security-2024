@@ -1,4 +1,4 @@
-package com.thecoderstv.urlbased_and_rolebased_security.config;
+package com.thecoderstv.urlbased_and_rolebased_security.securityconfig;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,12 +12,11 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-@EnableWebSecurity
 public class SpringSecurityConfig {
 
     @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(10);
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
@@ -25,49 +24,33 @@ public class SpringSecurityConfig {
         http
                 .authorizeHttpRequests(authorize ->
                         authorize
+                                .requestMatchers("/public/**").permitAll()
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
                                 .requestMatchers("/user/**").hasRole("USER")
-                                .anyRequest().authenticated()  // Require authentication for all other URLs
+                                .anyRequest().authenticated()
                 )
-                .csrf(csrf -> csrf.disable())  // Disable CSRF protection for simplicity (consider enabling in production)
                 .formLogin(formLogin ->
                         formLogin
-                                .defaultSuccessUrl("/user/dashboard",true)
+                                .defaultSuccessUrl("/admin/dashboard")
                                 .permitAll() // here you are using spring provided default login page and we enabled it like this
                 )
                 .logout(logout ->
                         logout
                                 .logoutUrl("/logout")
-                                .permitAll()  // Allow unauthenticated access to logout
+                                .logoutSuccessUrl("/login?logout")
+                                .invalidateHttpSession(true)
+                                .clearAuthentication(true)
+                                .deleteCookies("JSESSIONID")
+                                .permitAll() // Allow unauthenticated access to logout
                 );
-//        logout
-//                .logoutUrl("/logout")
-//                .logoutSuccessUrl("/login?logout")
-//                .invalidateHttpSession(true)
-//                .deleteCookies("JSESSIONID")
-//                .permitAll()  // Allow unauthenticated access to logout
-//                );
-
         return http.build();
     }
 
+
     @Bean
     public UserDetailsService userDetailsService() {
-        // created admin
-        UserDetails admin = User.builder()
-                .username("thecoderstv")
-                .password(passwordEncoder().encode("thecoderstv"))
-                .roles("ADMIN")
-                .build();
-
-        // created user
-        UserDetails user = User.builder()
-                .username("shubham")
-                .password(passwordEncoder().encode("shubham"))
-                .roles("USER")
-                .build();
+        UserDetails admin = User.builder().username("shubham").password(bCryptPasswordEncoder().encode("shubham")).roles("ADMIN").build();
+        UserDetails user = User.builder().username("pankaj").password(bCryptPasswordEncoder().encode("pankaj")).roles("USER").build();
         return new InMemoryUserDetailsManager(admin, user);
-
     }
-
 }
