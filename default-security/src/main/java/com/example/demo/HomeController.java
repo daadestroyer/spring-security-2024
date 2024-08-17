@@ -11,9 +11,6 @@ public class HomeController {
 
     @Value("${spring.security.user.name}")
     private String username;
-    @Value("${spring.security.user.password}")
-    private String password;
-
     @GetMapping("/dashboard")
     public String dashboard(){
         return "Welcome back "+username;
