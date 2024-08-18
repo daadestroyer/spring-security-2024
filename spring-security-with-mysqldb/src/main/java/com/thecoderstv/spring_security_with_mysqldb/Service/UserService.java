@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
 
@@ -29,5 +31,13 @@ public class UserService {
         Role updatedRole = Role.builder().role(role).build();
         user.getRoles().add(updatedRole);
         return this.userRepo.save(user);
+    }
+
+    public List<User> findAllUser() {
+        return this.userRepo.findAll();
+    }
+
+    public User findUserById(int userId) {
+        return this.userRepo.findById(userId).get();
     }
 }
