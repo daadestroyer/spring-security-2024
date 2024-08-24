@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/default-security_01/spring-security.iml" filepath="$PROJECT_DIR$/default-security_01/spring-security.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/spring-security-2024.iml" filepath="$PROJECT_DIR$/.idea/spring-security-2024.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-security-with-mysqldb_03BasicAuth/spring-security-with-mysqldb.iml" filepath="$PROJECT_DIR$/spring-security-with-mysqldb_03BasicAuth/spring-security-with-mysqldb.iml" />
+      <module fileurl="file://$PROJECT_DIR$/urlbased_and_rolebased_security_02FormLogin/urlbased_and_rolebased_security.iml" filepath="$PROJECT_DIR$/urlbased_and_rolebased_security_02FormLogin/urlbased_and_rolebased_security.iml" />
+    </modules>
+  </component>
+</project>
