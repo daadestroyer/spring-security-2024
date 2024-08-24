@@ -32,7 +32,8 @@ public class SpringSecurityConfig {
                 )
                 .formLogin(formLogin ->
                         formLogin
-                                // .defaultSuccessUrl("/admin/dashboard") // here we have passed static dashboard api which in the cause of user creates problem and give 403(because user is unauthorized to access admin dashbard)
+                                // .defaultSuccessUrl("/admin/dashboard") // here we have passed static dashboard api which in the cause of user creates
+                                // problem and give 403(because user is unauthorized to access admin dashbard)
                                 .successHandler(customAuthenticationSuccessHandler())
                                 .permitAll() // here you are using spring provided default login page and we enabled it like this
                 )
