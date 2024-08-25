@@ -1,0 +1,13 @@
+package com.thecoderstv.facebook_group_management;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class FacebookGroupManagementApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(FacebookGroupManagementApplication.class, args);
+	}
+
+}
