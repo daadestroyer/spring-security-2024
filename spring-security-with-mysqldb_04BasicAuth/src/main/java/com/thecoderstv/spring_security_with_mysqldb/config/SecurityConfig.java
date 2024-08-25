@@ -22,6 +22,8 @@ public class SecurityConfig {
                         authorize
                                 .requestMatchers("/public/**").permitAll()
                                 .requestMatchers("/admin/**").hasAnyRole("ADMIN")
+                                .requestMatchers("/user/**").hasAnyRole("USER")
+
                                 .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults()); // here we are telling that we are enabling Basic Auth which and we are allowing accessing api from postman and we need to do basic authorization
