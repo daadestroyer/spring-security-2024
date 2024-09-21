@@ -28,7 +28,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((auth ->
                                 auth
                                         .requestMatchers("/user/join").permitAll() // want to disable security for this
-                                        .requestMatchers("/user/**").authenticated()
+                                        .requestMatchers("/user/**","post/**").authenticated()
                         )
 
                 )
