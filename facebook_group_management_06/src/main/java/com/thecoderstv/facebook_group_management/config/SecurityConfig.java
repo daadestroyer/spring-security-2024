@@ -1,5 +1,6 @@
 package com.thecoderstv.facebook_group_management.config;
 
+import com.thecoderstv.facebook_group_management.entity.CustomerUserDetails;
 import com.thecoderstv.facebook_group_management.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -14,38 +15,39 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true) // this is very important
-@EnableWebSecurity // this is very important both above two annotation need to user when you are using @PreAuthorize
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
+@EnableWebSecurity
 public class SecurityConfig {
 
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf((csrf) -> csrf.disable())
                 .authorizeHttpRequests((auth ->
                                 auth
-                                        .requestMatchers("/user/join").permitAll() // want to disable security for this
-                                        .requestMatchers("/user/**","post/**").authenticated()
-                        )
+                                        .requestMatchers("/user/join").permitAll()
+                                        .requestMatchers("/user/**","/post/**").authenticated()
 
+
+                        )
                 )
                 .httpBasic(Customizer.withDefaults());
         return http.build();
     }
 
     @Bean
-    AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
+    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
         AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
         authenticationManagerBuilder.userDetailsService(customUserDetailsService);
         return authenticationManagerBuilder.build();
     }
 
     @Bean
-    BCryptPasswordEncoder bCryptPasswordEncoder() {
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
-    }
 
+    }
 }

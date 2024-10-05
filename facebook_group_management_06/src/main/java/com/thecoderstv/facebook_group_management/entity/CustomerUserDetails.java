@@ -9,18 +9,17 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CustomUserDetails implements UserDetails {
+public class CustomerUserDetails implements UserDetails {
     private String userName;
     private String password;
     private boolean isActive;
     private List<GrantedAuthority> authorities;
 
-    public CustomUserDetails(FBUser user) {
+    public CustomerUserDetails(FBUser user) {
         this.userName = user.getUsername();
         this.password = user.getPassword();
         this.isActive = user.isActive();
-        this.authorities = Arrays.stream(user.getRole().split(",")).map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
+        this.authorities = Arrays.stream(user.getRole().split(",")).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
 
     @Override
