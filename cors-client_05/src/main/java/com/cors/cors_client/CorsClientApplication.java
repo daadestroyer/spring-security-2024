@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class CorsClientApplication {
 
-
-	@RequestMapping("/")
+	@RequestMapping("/client")
 	public String home(){
 		return "home";
 	}
+
 	public static void main(String[] args) {
 		SpringApplication.run(CorsClientApplication.class, args);
 	}
