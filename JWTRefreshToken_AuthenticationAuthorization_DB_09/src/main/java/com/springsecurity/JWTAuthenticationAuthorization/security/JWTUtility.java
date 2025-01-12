@@ -16,7 +16,7 @@ import java.util.function.Function;
 @Component
 public class JWTUtility {
 
-    public static final long TOKEN_EXPIRATION_TIME = 1000 * 60 * 3; // token will expire in 3 mins
+    public static final long TOKEN_EXPIRATION_TIME = 1000 * 60 * 1; // token will expire in 1 mins
     // Generate a secure 256-bit key for HS256
     private SecretKey SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
@@ -55,7 +55,7 @@ public class JWTUtility {
                 .setClaims(claims)
                 .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION_TIME))
+                .setExpiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION_TIME)) 
                 .signWith(SECRET_KEY)
                 .compact();
     }
